@@ -6,6 +6,21 @@
 #define SERVICE_UUID "4fa1c432-132e-4b77-b952-b91b34c25638"
 #define CHARACTERISTIC_UUID "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
 
+class PacketCallback : public BLECharacteristicCallbacks
+{
+    void onWrite(BLECharacteristic *pCharacteristic)
+    {
+        // 스마트폰이 쓴 바이트 데이터 가져오기
+        uint8_t *pData = pCharacteristic->getData();
+        size_t length = pCharacteristic->getLength();
+        if (length > 0)
+        {
+            // 수신된 데이터가 있는 경우 첫번째 바이트 데이터(명령) 꺼내오기
+            uint8_t command = pData[0];
+        }
+    }
+};
+
 void setup()
 {
     // 1. BLE 기기 이름 설정 및 초기화
@@ -17,8 +32,9 @@ void setup()
     // 3. 서버를 통한 서비스 생성
     BLEService *pService = pServer->createService(SERVICE_UUID);
 
-    // 4. 서비스를 통한 특성 생성
+    // 4. 서비스를 통한 특성 생성 + 특성에 데이터를 받아올 콜백 등록
     BLECharacteristic *pCharacteristic = pService->createCharacteristic(CHARACTERISTIC_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY);
+    pCharacteristic->setCallbacks(new PacketCallback());
 
     // 5. 서비스 개시
     pService->start();
