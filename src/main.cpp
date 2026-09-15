@@ -3,6 +3,7 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 #include <BLE2902.h>
+#include "callbacks.h"
 
 // 기기간 연결 후 데이터 송수신을 위한 GATT 고유번호
 #define SERVICE_UUID "4fa1c432-132e-4b77-b952-b91b34c25638"
@@ -27,8 +28,8 @@ void setup()
 
     // Notify
     BLE2902 *pDescriptor = new BLE2902();
-    pCharacteristic->addDescriptor(pDescriptor);          // 특성에 데이터 구독 ON/OFF 스위치 달기
-    pDescriptor->setCallbacks(new DescriptorCallbacks()); // ON/OFF 스위치 상태를 실시간으로 받을 콜백 등록
+    pCharacteristic->addDescriptor(pDescriptor);         // 특성에 데이터 구독 ON/OFF 스위치 달기
+    pDescriptor->setCallbacks(new DescriptorCallback()); // ON/OFF 스위치 상태를 실시간으로 받을 콜백 등록
 
     // 5. 서비스 개시
     pService->start();
