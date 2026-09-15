@@ -17,3 +17,5 @@ class DescriptorCallback : public BLEDescriptorCallbacks
 public:
     void onWrite(BLEDescriptor *pDescriptor) override;
 };
+
+extern bool isNotifySubscribed; // 실제 변수는 다른 .cpp에서 실제 정의되어 있음을 알림 (선언, 메모리 할당 X)

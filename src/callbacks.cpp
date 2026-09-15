@@ -12,7 +12,7 @@ void PacketCallback::onWrite(BLECharacteristic *pCharacteristic)
     }
 }
 
-bool isNotifySubscribed = false;
+bool isNotifySubscribed = false; // 변수 실제 정의(초기화) 및 메모리 할당
 
 void DescriptorCallback::onWrite(BLEDescriptor *pDescriptor)
 {
@@ -20,7 +20,7 @@ void DescriptorCallback::onWrite(BLEDescriptor *pDescriptor)
     uint8_t *value = pDescriptor->getValue();
     if (value[0] == 1)
     {
-        isNotifySubscribed = true;
+        isNotifySubscribed = true; // 초기화가 아니라 이미 정의되어 있는 변수에 값 대입하여 상태 변경
         // setNotify(true) → 0x0001 Write → Switch ON
     }
     else
