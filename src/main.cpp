@@ -9,6 +9,9 @@
 #define SERVICE_UUID "4fa1c432-132e-4b77-b952-b91b34c25638"
 #define CHARACTERISTIC_UUID "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
 
+// 전역 포인터
+BLECharacteristic *pCharacteristic = nullptr;
+
 void setup()
 {
     // 1. BLE 기기 이름 설정 및 초기화
@@ -21,7 +24,7 @@ void setup()
     BLEService *pService = pServer->createService(SERVICE_UUID);
 
     // 4. 서비스를 이용한 특성 생성 및 갖가지 속성 설정
-    BLECharacteristic *pCharacteristic = pService->createCharacteristic(CHARACTERISTIC_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY);
+    pCharacteristic = pService->createCharacteristic(CHARACTERISTIC_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY);
 
     // Write
     pCharacteristic->setCallbacks(new PacketCallback());
