@@ -39,7 +39,7 @@ bool isNotifySubscribed = false; // 변수 실제 정의(초기화) 및 메모�
 
 void DescriptorCallback::onWrite(BLEDescriptor *pDescriptor)
 {
-    // 스마트폰 UI 버튼 클릭 → Flutter의 setNotifyValue(bool) 호출 → 0x2902 Descriptor 메모리 값(16비트) 0x0000 ↔ 0x0001 쓰기(Write) → 콜백함수 호출
+    // 스마트폰 UI 버튼 클릭 → Flutter의 setNotifyValue(bool) 호출 → 0x2902 Descriptor 메모리 값(16비트) 쓰기(Write) → 콜백함수 호출
     uint8_t *val = pDescriptor->getValue();
     size_t length = pDescriptor->getLength(); // 단위: 바이트
 
