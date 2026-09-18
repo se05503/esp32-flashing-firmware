@@ -1,4 +1,5 @@
 #include "callbacks.h" // 헤더에 선언한 클래스와 함수 정보를 구현체가 알아야 함
+#include <BLEServer.h>
 
 void PacketCallback::onWrite(BLECharacteristic *pCharacteristic)
 {
@@ -28,4 +29,21 @@ void DescriptorCallback::onWrite(BLEDescriptor *pDescriptor)
         isNotifySubscribed = false;
         // setNotify(false) → 0x0000 Write → Switch OFF
     }
+}
+
+bool isDeviceConnected = false;
+
+void ServerCallback::onConnect(BLEServer *pServer)
+{
+    isDeviceConnected = true;
+    // notify는 이후 선택 사항
+    // BLE Stack이 광고 패킷을 더이상 뿌리지 않도록 알아서 처리
+}
+
+void ServerCallback::onDisconnect(BLEServer *pServer)
+{
+    isDeviceConnected = false;
+    isNotifySubscribed = false; // 연결이 끊기면 구독 상태도 해제
+    // 연결이 끊기면 다른 기기가 찾을 수 있도록 재광고
+    pServer->startAdvertising();
 }

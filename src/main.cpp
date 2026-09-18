@@ -17,8 +17,9 @@ void setup()
     // 1. BLE 기기 이름 설정 및 초기화
     BLEDevice::init("Birdly_ESP32_Hardware");
 
-    // 2. 전파 송신 및 서비스 생성을 위한 BLE 서버 생성
+    // 2. 전파 송신 및 서비스 생성을 위한 BLE 서버 생성 및 이벤트 콜백 연결
     BLEServer *pServer = BLEDevice::createServer();
+    pServer->setCallbacks(new ServerCallback());
 
     // 3. 서버를 통한 서비스 생성
     BLEService *pService = pServer->createService(SERVICE_UUID);

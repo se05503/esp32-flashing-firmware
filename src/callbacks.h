@@ -19,3 +19,12 @@ public:
 };
 
 extern bool isNotifySubscribed; // 실제 변수는 다른 .cpp에서 실제 정의되어 있음을 알림 (선언, 메모리 할당 X)
+
+// BLE 서버 연결/해제 이벤트 콜백
+class ServerCallback : public BLEServerCallbacks
+{
+    void onConnect(BLEServer *pServer) override;
+    void onDisconnect(BLEServer *pServer) override;
+};
+
+extern bool isDeviceConnected;
