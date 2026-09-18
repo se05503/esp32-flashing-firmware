@@ -1,15 +1,36 @@
 #include "callbacks.h" // 헤더에 선언한 클래스와 함수 정보를 구현체가 알아야 함
 #include <BLEServer.h>
 
-void PacketCallback::onWrite(BLECharacteristic *pCharacteristic)
+void RxCallback::onWrite(BLECharacteristic *pCharacteristic)
 {
     // 스마트폰이 쓴 바이트 데이터 가져오기
     uint8_t *pData = pCharacteristic->getData();
     size_t length = pCharacteristic->getLength();
     if (length > 0)
     {
-        // 수신된 데이터가 있는 경우 첫번째 바이트 데이터(명령) 꺼내오기
+        // 프로토콜 파싱 예시 (예: pData[0] = 헤더 명령)
         uint8_t command = pData[0];
+        switch (command)
+        {
+        case 0x00:
+            // 로봇 정지
+            break;
+        case 0x01:
+            // 로봇 전진
+            break;
+        case 0x02:
+            // 로봇 후진
+            break;
+        case 0x03:
+            // 로봇 좌회전
+            break;
+        case 0x04:
+            // 로봇 우회전
+            break;
+        default:
+            // 잘못된 명령, 알 수 없는 명령
+            break;
+        }
     }
 }
 

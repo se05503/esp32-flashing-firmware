@@ -4,7 +4,8 @@
 #include <BLECharacteristic.h>
 #include <BLEDescriptor.h>
 
-class PacketCallback : public BLECharacteristicCallbacks
+// RX Characteristic Write 콜백 (앱 → ESP32 로봇 제어 명령)
+class RxCallback : public BLECharacteristicCallbacks
 {
     // 클래스 멤버 함수의 접근 권한 설정 (기본값: private)
     // 구현부를 작성하지 않음 (인터페이스와 구현 분리)
